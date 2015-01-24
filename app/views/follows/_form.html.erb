@@ -1,0 +1,10 @@
+<% if current_user.follows?(user) %>
+  <button class="follow-toggle"
+    data-user-id="<%= user.id %>"
+    data-follow-state="followed"></button>
+  <%#= button_to "Unfollow", user_follow_url(user), method: :delete %>
+<% else %>
+  <button class="follow-toggle"
+  data-user-id="<%= user.id %>"
+  data-follow-state="unfollowed"></button>
+<% end %>

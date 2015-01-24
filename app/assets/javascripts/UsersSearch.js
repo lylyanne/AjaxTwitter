@@ -42,10 +42,6 @@ $.UsersSearch.prototype.renderResults = function (response) {
     $li.append($a);
     $li.append($button);
     this.$ul.append($li);
-
-    // <button class="follow-toggle"
-    // data-user-id="<%= user.id %>"
-    // data-follow-state="followed"></button>
   };
 };
 

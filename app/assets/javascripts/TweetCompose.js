@@ -56,7 +56,6 @@ $.TweetCompose.prototype.handleSuccess = function (response) {
     var $innerul = $("<ul></ul>");
     var $innerli = $("<li></li>");
     var $a = $('<a></a>');
-  debugger
     $a.text(response.mentions[0].user.username);
     $a.attr('href', '/users/' + response.mentions[0].user_id);
     $innerli.append($a);

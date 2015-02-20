@@ -6,8 +6,6 @@ $.UsersSearch = function (el) {
 };
 
 $.UsersSearch.prototype.handleInput = function(){
-  var $currentInput = $(this.$input.val());
-  // console.log($currentInput.serializeJSON());
   var that = this;
   $.ajax({
     url: "/users/search",
@@ -28,6 +26,7 @@ $.UsersSearch.prototype.renderResults = function (response) {
     var $li = $('<li></li>');
     var $a = $('<a></a>');
     $a.text(response[i].username);
+    $a.attr('href', '/users/' + response[i].id);
 
     var $button = $('<button></button>');
     $button.addClass('follow-toggle');
@@ -38,7 +37,6 @@ $.UsersSearch.prototype.renderResults = function (response) {
     }
     $button.followToggle(options);
 
-    $a.attr('href', '/users/' + response[i].id);
     $li.append($a);
     $li.append($button);
     this.$ul.append($li);

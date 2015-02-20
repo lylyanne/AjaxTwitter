@@ -29,7 +29,7 @@ $.TweetCompose.prototype.submit = function(event){
   this.$el.data("tweets-ul", "#feed");
   var formData = this.$el.serializeJSON();
   this.$el.find(':input').prop("disabled", true);
-
+  
   $.ajax({
     url: "/tweets/",
     type: "POST",
@@ -43,34 +43,15 @@ $.TweetCompose.prototype.submit = function(event){
 
 $.TweetCompose.prototype.clearInput = function () {
   this.$el.find(':input').not(':submit').val('');
+  this.$el.find('strong').remove();
+  this.$el.find(':input').prop("disabled", false);
+  this.$mentionedUsersDiv.empty();
 };
 
 $.TweetCompose.prototype.handleSuccess = function (response) {
   this.clearInput();
-  this.$el.find('strong').remove();
 
-  var $ul = $(this.$el.parent().find("ul.feed"));
-  var $a = $('<a></a>');
-  $a.text(response.user.username);
-  $a.attr('href', '/users/' + response.user.id);
-  var $li = $("<li></li>");
-  $li.append(response.content + " -- ").append($a).append(" -- " +
-  response.created_at);
-
-  if (response.mentions) {
-    var $innerul = $("<ul></ul>");
-    var $innerli = $("<li></li>");
-    var $a = $('<a></a>');
-    $a.text(response.mentions[0].user.username);
-    $a.attr('href', '/users/' + response.mentions[0].user_id);
-    $innerli.append($a);
-    $innerul.append($innerli);
-  }
-
-  $ul.prepend($li);
-  $li.append($innerul);
-  this.$el.find(':input').prop("disabled", false);
-  this.$mentionedUsersDiv.empty();
+  $(this.$el.data("tweets-ul")).trigger("insert-tweet", response);
 };
 
 $.TweetCompose.prototype.addMentionedUser = function () {
